@@ -29,7 +29,7 @@ Currently what i have outlined in my myapp/package.json is a dependency on 1 fil
   }
 }
 ```
-
+What I get in terminal is that my module could not be found, and its searching for it in node_modules ?? so I have placed my comoponents test within node_modules, and it still did not find it there. 
 ```
 WARN: Could not find dummy/test1.js in node_modules. Ignoring.
 ```
