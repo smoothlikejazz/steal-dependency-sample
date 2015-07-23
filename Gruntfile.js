@@ -9,10 +9,7 @@ module.exports = function (grunt) {
                         config: "package.json!npm",
                         main: "myapp",
                         bundlesPath:"dist/bundles/",
-                        baseUrl:"./myapp/",
-                        paths : {
-
-                        }
+                        baseUrl:"./myapp/"
                     },
                     buildOptions: {
                         minify: true,

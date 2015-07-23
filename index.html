@@ -2,18 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>Testing Steal.js Loader</title>
 </head>
 <body>
+Check the console log...
 <script>
     steal = {
-        main: "myapp",
-        env: "production"
+        main : "myapp",
+        env: "development"
     };
 
 </script>
 <script src="./steal/steal.js"
-        config="./myapp/config.js">
+        config="./myapp/package.json!npm">
 </script>
 </body>
 </html>

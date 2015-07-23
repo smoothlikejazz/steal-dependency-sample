@@ -27,9 +27,17 @@ function ensureExists(path, mask, cb) {
 
 ensureExists(__dirname + '/myapp/dummy', 0744, function(err) {
 	if (!err){
-		console.log("Directory Created");
+		console.log("Myapp Dummy Directory Created");
 	}
 });
+
+ensureExists(__dirname + '/myapp/dependents', 0744, function(err) {
+	if (!err){
+		console.log("Dependents Directory Created");
+	}
+});
+
+
 
 //var fileTotal = 504;
 //var depth = 3;
@@ -68,25 +76,25 @@ for(var i=1 ; i<=fileTotal ; i++){
 	fileContent = "";
 	fileIndex = i;
 	if(i%modulus === 1){
-		fileContent = 'steal("dummy/test'+(fileIndex+1)+'.js","dummy/test'+(fileIndex+2)+'.js", function(){console.log("test'+(fileIndex)+'.js");});';
+		fileContent = 'steal("myapp/test'+(fileIndex+1)+'.js","myapp/test'+(fileIndex+2)+'.js", function(){console.log("test'+(fileIndex)+'.js");});';
 	}
 	else if(i%modulus === 2 ){
-		fileContent = 'steal("dummy/test'+(fileIndex+2)+'.js","dummy/test'+(fileIndex+3)+'.js", function(){console.log("test'+(fileIndex)+'.js");});';
+		fileContent = 'steal("myapp/test'+(fileIndex+2)+'.js","myapp/test'+(fileIndex+3)+'.js", function(){console.log("test'+(fileIndex)+'.js");});';
 	}
 	else if(i%modulus === 3){
-		fileContent = 'steal("dummy/test'+(fileIndex+3)+'.js","dummy/test'+(fileIndex+4)+'.js", function(){console.log("test'+(fileIndex)+'.js");});';
+		fileContent = 'steal("myapp/test'+(fileIndex+3)+'.js","myapp/test'+(fileIndex+4)+'.js", function(){console.log("test'+(fileIndex)+'.js");});';
 	}
 	else if(i%modulus === 4){
-		fileContent = 'steal("dummy/test'+(fileIndex+4)+'.js","dummy/test'+(fileIndex+5)+'.js", function(){console.log("test'+(fileIndex)+'.js");});';
+		fileContent = 'steal("myapp/test'+(fileIndex+4)+'.js","myapp/test'+(fileIndex+5)+'.js", function(){console.log("test'+(fileIndex)+'.js");});';
 	}
 	else if(i%modulus === 5){
-		fileContent = 'steal("dummy/test'+(fileIndex+5)+'.js","dummy/test'+(fileIndex+6)+'.js", function(){console.log("test'+(fileIndex)+'.js");});';
+		fileContent = 'steal("myapp/test'+(fileIndex+5)+'.js","myapp/test'+(fileIndex+6)+'.js", function(){console.log("test'+(fileIndex)+'.js");});';
 	}
 	else if(i%modulus === 6){
-		fileContent = 'steal("dummy/test'+(fileIndex+6)+'.js","dummy/test'+(fileIndex+7)+'.js", function(){console.log("test'+(fileIndex)+'.js");});';
+		fileContent = 'steal("myapp/test'+(fileIndex+6)+'.js","myapp/test'+(fileIndex+7)+'.js", function(){console.log("test'+(fileIndex)+'.js");});';
 	}
 	else if(i%modulus === 7){
-		fileContent = 'steal("dummy/test'+(fileIndex+7)+'.js","dummy/test'+(fileIndex+8)+'.js", function(){console.log("test'+(fileIndex)+'.js");});';
+		fileContent = 'steal("myapp/test'+(fileIndex+7)+'.js","myapp/test'+(fileIndex+8)+'.js", function(){console.log("test'+(fileIndex)+'.js");});';
 	}
 	else {
 		fileContent = 'console.log("test'+(fileIndex)+'.js");';
@@ -104,7 +112,7 @@ var myappContents = "steal(";
 for(var j=1 ; j<=fileTotal ; j++){
 
 	if(j%modulus === 1){
-		myappContents += "'dummy/test"+j+".js',";
+		myappContents += "'myapp/test"+j+".js',";
 	}
 
 }
@@ -116,3 +124,54 @@ fs.writeFile("myapp/myapp.js", myappContents, function (err) {
 	if (err) throw err;
 	console.log("Main MyApp File has been created.");
 });
+
+
+/*
+ Create dependent files for each file created and a Package.json file with dependencies.
+ */
+
+var packageContents = {
+	"system": {
+		"paths": {
+			"myapp/*" : "dummy/*.js"
+		},
+		"meta": {
+			//"myapp/test1": {
+			//	"deps": [
+			//		"dependents/dependent_1"
+			//	]
+			//},
+			//"myapp/test2": {
+			//	"deps": [
+			//		"dependents/dependent_1"
+			//	]
+			//}
+		}
+	}
+};
+
+var dependencyModuleName;
+for(i=1 ; i<=fileTotal ; i++){
+
+
+	dependencyModuleName = "myapp/test"+i;
+	packageContents.system.meta[dependencyModuleName] = {
+		"deps": [
+			"dependents/dependent_" + i
+		]
+	};
+
+	fileContent = '//dependent file to steal dependent_'+(i)+'.js';
+	fs.writeFile("myapp/dependents/dependent_"+i+".js", fileContent, function (err) {
+		if (err) throw err;
+		//console.log("File has been created.");
+	});
+}
+
+
+
+fs.writeFile("myapp/package.json", JSON.stringify(packageContents), function (err) {
+	if (err) throw err;
+	//console.log("File has been created.");
+});
+

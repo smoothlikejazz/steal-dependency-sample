@@ -1,1 +1,1 @@
-steal("dummy/test102.js","dummy/test103.js", function(){console.log("test96.js");});
+steal("myapp/test102.js","myapp/test103.js", function(){console.log("test96.js");});
