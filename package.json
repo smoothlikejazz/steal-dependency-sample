@@ -1,0 +1,19 @@
+{
+  "name": "steal-testing-dependency",
+  "version": "1.0.0",
+  "description": "testing steal-tools",
+  "scripts": {
+    "build": "steal-tools"
+  },
+  "author": "smoothlikejazz@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "steal": "^0.10.5",
+    "grunt-cli" : "*",
+    "grunt" : "*",
+    "mkdirp" : "*"
+  },
+  "devDependencies": {
+    "steal-tools": "^0.10.4"
+  }
+}

@@ -39,6 +39,7 @@ WARN: Could not find dummy/test1.js in node_modules. Ignoring.
 ``` npm install ```
 
 ## Generate Files
+*Note:* This does not have to be run i already checked it into to the repo so my example can be ran without this extra step.
 Running the below command will create 511 js files to simulate the behaviour of steal loading. It will create a main myapp.js along with all other files necessary to be stolen.
 Looks like a binary search tree, with only a depth of 4, where test1.js steals 2 & 3, and 2 steals  4 & 5 ...
 ``` node filegenerator ```

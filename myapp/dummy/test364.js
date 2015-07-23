@@ -1,0 +1,1 @@
+steal("dummy/test368.js","dummy/test369.js", function(){console.log("test364.js");});

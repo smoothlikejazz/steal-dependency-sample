@@ -1,0 +1,13 @@
+{
+  "system": {
+    "paths": {
+    },
+    "meta": {
+      "dummy/test1.js": {
+        "deps": [
+          "components/test/test.js"
+        ]
+      }
+    }
+  }
+}
